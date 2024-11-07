@@ -18,7 +18,7 @@ const CustomButton = ({icon=<CloudUploadIcon/>, inputType="file", accept, onInpu
                 variant="contained" 
                 startIcon={icon}  
                 {...rest} 
-                sx={{margin: 2}}        
+                sx={{margin: 2, background: '#0097a7'}}        
             >
                 {children}  
 
