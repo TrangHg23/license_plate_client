@@ -1,6 +1,4 @@
-import { Button } from "@mui/material"
-import { ButtonProps } from "@mui/material"
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button, ButtonProps } from "@mui/material";
 
 interface CustomButtonProps extends ButtonProps {
     icon?: React.ReactNode;
@@ -8,35 +6,56 @@ interface CustomButtonProps extends ButtonProps {
     accept?: string;
     onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onButtonClick?: () => void;
+    size?: "small" | "large"; 
 }
-const CustomButton = ({icon=<CloudUploadIcon/>, inputType="file", accept, onInputChange, onButtonClick, children, ...rest}: CustomButtonProps) => {
+
+const CustomButton = ({
+    icon = "",
+    inputType = "file",
+    accept,
+    onInputChange,
+    onButtonClick,
+    size = "small",
+    children,
+    ...rest
+}: CustomButtonProps) => {
     return (
         <div>
-
             <Button
-                component='label'
-                variant="contained" 
-                startIcon={icon}  
-                {...rest} 
-                sx={{margin: 2, background: '#0097a7'}}        
+                component="label"
+                variant="contained"
+                startIcon={icon}
+                {...rest}
+                sx={{
+                    m: 2,
+                    background: "#0097a7",
+                    borderRadius: "50px",
+                    width: "90%",
+                    fontSize: '20px',
+                    textTransform: 'capitalize',
+                    '&:hover': {
+                        opacity: 0.8
+                    }
+                }}
+                size={size} 
             >
-                {children}  
+                {children}
 
                 {inputType === "file" && (
                     <input
                         type="file"
                         hidden
-                        accept={accept} 
-                        onChange={onInputChange} 
-                    /> 
+                        accept={accept}
+                        onChange={onInputChange}
+                    />
                 )}
-    
-                {inputType === "text" && (
-                    <button type="button" style={{ display: 'none' }} onClick={onButtonClick} />
-                )}
-            </Button> 
-        </div>
-    )
-}
 
-export default CustomButton
+                {inputType === "text" && (
+                    <button type="button" style={{ display: "none" }} onClick={onButtonClick} />
+                )}
+            </Button>
+        </div>
+    );
+};
+
+export default CustomButton;

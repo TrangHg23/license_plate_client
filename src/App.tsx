@@ -1,19 +1,28 @@
-import { useState } from "react";
-import { DetectComponent, UploadComponent } from "./components";
+import { Fragment } from "react/jsx-runtime";
+import { ToastContainer } from "react-toastify";
+import { Route, Routes } from "react-router";
+import DefaultLayout from "./layout/DefautLayout";
+import 'react-toastify/dist/ReactToastify.css';
+import { allRoutes } from "./routes";
 
-function App() {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
+export default function App () {
   return (
-    <div style={{background: '#fff', borderRadius: '20px', boxShadow: '5px 10px 18px #78909c'}}>
-      <h1>License Plate</h1>
-      <div style={{display: 'flex'}}>
-        <UploadComponent onImageSelect={setSelectedImage} />
-        <DetectComponent image={selectedImage} />
-      </div>
-    </div>
-  );
+    <main>
+      <Routes>
+          { 
+            allRoutes.map((route, i) => {
+              let Layout;
+              if(route.layout === null) Layout = Fragment
+              else if(route.layout) Layout = route.layout
+              else Layout = DefaultLayout
+              const Page = route.component
+                return (
+                  <Route key={i} path={route.path} element={<Layout><Page/></Layout>}/>
+                )
+            })
+          }
+      </Routes>
+      <ToastContainer autoClose={5000} closeOnClick/>
+    </main>
+  )
 }
-
-export default App
-
